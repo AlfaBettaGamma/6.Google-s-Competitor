@@ -1,88 +1,43 @@
-def PatternUnlock( N, hits):
-  st = ''
-  s = 0
-  pr = 0
-  fst = 0
-  spf = []
-  fs = []
+def WordSearch(len, s, subs):
+  stNew = []
+  count = 0
   p = 0
-  if hits.count(0) == 0 and N == len(hits):
-    for i in range(N-1):
-      if (hits[i] == 1 and hits[i + 1] == 2 or
-         hits[i] == 1 and hits[i + 1] == 9 or
-         hits[i] == 1 and hits[i + 1] == 6 or
-         hits[i] == 2 and hits[i + 1] == 1 or
-         hits[i] == 2 and hits[i + 1] == 3 or
-         hits[i] == 2 and hits[i + 1] == 8 or
-         hits[i] == 2 and hits[i + 1] == 5 or
-         hits[i] == 3 and hits[i + 1] == 2 or
-         hits[i] == 3 and hits[i + 1] == 4 or
-         hits[i] == 3 and hits[i + 1] == 7 or
-         hits[i] == 4 and hits[i + 1] == 3 or
-         hits[i] == 4 and hits[i + 1] == 5 or
-         hits[i] == 5 and hits[i + 1] == 4 or
-         hits[i] == 5 and hits[i + 1] == 2 or
-         hits[i] == 5 and hits[i + 1] == 6 or
-         hits[i] == 6 and hits[i + 1] == 5 or
-         hits[i] == 6 and hits[i + 1] == 1 or
-         hits[i] == 7 and hits[i + 1] == 3 or
-         hits[i] == 7 and hits[i + 1] == 8 or
-         hits[i] == 8 and hits[i + 1] == 7 or
-         hits[i] == 8 and hits[i + 1] == 2 or
-         hits[i] == 8 and hits[i + 1] == 9 or
-         hits[i] == 9 and hits[i + 1] == 1 or
-         hits[i] == 9 and hits[i + 1] == 8):
-        s += 1
-      elif (hits[i] == 1 and hits[i + 1] == 5 or
-           hits[i] == 1 and hits[i + 1] == 8 or
-           hits[i] == 2 and hits[i + 1] == 6 or
-           hits[i] == 2 and hits[i + 1] == 9 or
-           hits[i] == 2 and hits[i + 1] == 4 or
-           hits[i] == 2 and hits[i + 1] == 7 or
-           hits[i] == 3 and hits[i + 1] == 5 or
-           hits[i] == 3 and hits[i + 1] == 8 or
-           hits[i] == 4 and hits[i + 1] == 2 or
-           hits[i] == 5 and hits[i + 1] == 1 or
-           hits[i] == 5 and hits[i + 1] == 3 or
-           hits[i] == 6 and hits[i + 1] == 2 or
-           hits[i] == 7 and hits[i + 1] == 2 or
-           hits[i] == 8 and hits[i + 1] == 1 or
-           hits[i] == 8 and hits[i + 1] == 3 or
-           hits[i] == 9 and hits[i + 1] == 2):
-        s += 1.41421
-      elif (hits[i] == 1 and hits[i + 1] == 4 or
-           hits[i] == 1 and hits[i + 1] == 7 or
-           hits[i] == 3 and hits[i + 1] == 6 or
-           hits[i] == 3 and hits[i + 1] == 9 or
-           hits[i] == 4 and hits[i + 1] == 1 or
-           hits[i] == 4 and hits[i + 1] == 8 or
-           hits[i] == 5 and hits[i + 1] == 9 or
-           hits[i] == 5 and hits[i + 1] == 7 or
-           hits[i] == 6 and hits[i + 1] == 3 or
-           hits[i] == 6 and hits[i + 1] == 8 or
-           hits[i] == 7 and hits[i + 1] == 1 or
-           hits[i] == 7 and hits[i + 1] == 5 or
-           hits[i] == 8 and hits[i + 1] == 6 or
-           hits[i] == 8 and hits[i + 1] == 4 or
-           hits[i] == 9 and hits[i + 1] == 5 or
-           hits[i] == 9 and hits[i + 1] == 3):
-        s += 2.236065
-  else:
-    return print('Неверно введены занчения в список!')
-  s = s*100000
-  pr = int(s)
-  while pr is not 0:
-    p = pr%10
-    pr = pr//10
-    spf.insert(0,p)
-  for i in range(len(spf)):
-    if(spf[i] != 0):
-      fs.append(spf[i])
-  p = 10**(len(fs)-1)
-  for i in range(len(fs)):
-    fst = fst + (fs[i]*p)
-    p = p//10
-  st = str(fst)
-  return st
+  lfp = - 1
+  fp = 0
+  rf = 0
+  for char in s:
+    count += 1
 
-print(PatternUnlock(9, [6,1,9,5,2,8,4,3,7]))
+  while p < count:
+    if s[p] == ' ':
+      lfp = p
+
+    if p - fp == len + 1:
+      if lfp == -1:
+        stNew.append(s[fp:p - 1])
+        rf += 1
+        fp = p - 1
+        p -= 1
+      else:
+        stNew.append(s[fp:lfp])
+        rf += 1
+        fp = lfp + 1
+        p = lfp + 1
+        lfp -= 1
+    p += 1
+
+  if p > fp:
+    stNew.append(s[fp:p])
+    rf += 1
+    
+  fin = []
+    
+  for i in range(rf):  
+    if subs in stNew[i].split():       
+        fin.append(1)        
+    else:        
+        fin.append(0)       
+
+  return fin
+
+WordSearch(12,' строка разбивается на набор строк через выравнивание по заданной ширине.','строк')
