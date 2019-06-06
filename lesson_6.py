@@ -39,5 +39,3 @@ def WordSearch(len, s, subs):
         fin.append(0)       
 
   return fin
-
-WordSearch(12,' строка разбивается на набор строк через выравнивание по заданной ширине.','строк')
